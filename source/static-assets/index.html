@@ -1,0 +1,161 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>${PAGE_TITLE}</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/milligram.css">
+  <link rel="stylesheet" href="css/fontawesome.min.css">
+  <link rel="stylesheet" href="css/validetta.min.css">
+  <link rel="stylesheet" href="css/tlite.css">
+  <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+  <!-- Handlebars Templates -->
+  <script id="template-main-content" type="text/x-handlebars-template">
+    <form id="form">
+      <div class="row">
+        <div class="column">
+          {{#if logoURL }}
+            <a id="logo-url" href="{{websiteURL}}"><img class="logo" id="logo" alt="logo" src="{{ logoURL }}" /></a>
+          {{/if}}
+          {{#if text.pageHeader }}
+            <span class="page-header" id="page-header">{{{text.pageHeader}}}</span>
+          {{/if}}
+        </div>
+      </div>
+      <hr>
+
+      {{#if text.pageTitle }}
+        <div class="row">
+          <div class="column">
+            <h3 id="page-title">{{{text.pageTitle}}}</h3>
+            <p id="page-description">{{{text.pageDescription}}}</p>
+          </div>
+        </div>
+        <hr>
+      {{/if}}
+
+      <!--Endpoint Address-->
+      {{#each availableChannels}}
+        <div class="row">
+          <div class="column column-33">
+            <label class="endpoint-label" for="endpoint_{{this.channelType}}_{{@index}}">{{this.inputLabel}}</label>
+            {{#if this.required }}
+              <span class="required" title="Required">*</span>
+            {{/if}}
+          </div>
+          <div class="column">
+            {{buildInput "endpoint"}}
+            {{#if description }}
+              <i class="far fa-question-circle tooltip" title="{{this.description}}"></i>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+
+      <!--Attributes-->
+      {{#each attributes}}
+        <div class="row">
+          <div class="column column-33">
+            <label class="attribute-label" for="attribute_{{this.id}}">{{this.inputLabel}}</label>
+            {{#if this.required }}
+              <span class="required" title="Required">*</span>
+            {{/if}}
+          </div>
+          <div class="column">
+            {{buildInput "attribute"}}
+            {{#if description }}
+              <i class="far fa-question-circle tooltip" title="{{this.description}}"></i>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+
+      {{#if attributes.length}}<hr>{{/if}}
+
+      <!--Publications-->
+      {{#each categories}}
+      <div class="row">
+        <div class="column column-66">
+          <h4>{{this.name}}</h4>
+          <p>{{this.description}}</p>
+        </div>
+        {{#each ../availableChannels}}
+          <div class="column">
+            <span class="grid-header">{{this.displayName}}</span>
+          </div>
+        {{/each}}
+      </div>
+      {{#each publications}}
+        <hr class="mobile-publication-hr">
+        <div class="row">
+          <div class="column column-66">
+            <div class="publication-name">{{{this.name}}}</div>
+            <p class="publication-description">
+              {{{this.description}}}
+            </p>
+          </div>
+          {{#each ../../availableChannels}}
+            <div class="column">
+              <span class="grid-cell">
+                <label class="mobile-channel-label" for="publication_{{../id}}_{{this.id}}">{{this.displayName}}</label>
+                <input type="checkbox" id="publication_{{../id}}_{{this.id}}" class="publication-checkbox publication_{{../id}}" name= "{{../id}}" value="{{this.id}}" />
+              </span>
+            </div>
+          {{/each}}
+        </div>
+        
+      {{/each}}
+      <hr>
+    {{/each}}
+
+    {{#if unsubscribe.enabled }}
+      <div class="row">
+        <div class="column">
+          <input type="checkbox" id="unsub-from-all">
+          <label class="label-inline" for="unsub-from-all">{{text.unsubscribeText}}</label>
+        </div>
+      </div>
+      <hr>
+    {{/if}}
+
+      <div class="row">
+        <div class="column">
+          <span class="float-right">
+            <img id="progress" src="img/spinner.gif" /><button class="button-primary" id="submit" type="submit" value="Submit">{{text.submitButtonText}}</button> 
+          </span>
+        </div>
+      </div>
+    </form>
+    </script>
+
+  <!-- Main Content -->
+  <section class="container" id="content" style="display:none;"></section>
+
+  <!-- Spinner -->
+  <div id="spinner" class="spinner">
+    <img src="img/spinner.gif" />
+  </div>
+
+  <div class="success-notification"></div>
+  <div class="error-notification"></div>
+
+  <script src="js/jquery-3.5.1.min.js"></script>
+  <script src="js/polyfill.min.js"></script>
+  <script src="js/jquery.inputmask.min.js"></script>
+  <script src="js/inputmask.binding.js"></script>
+  <script src="js/handlebars.min-v4.7.6.js"></script>
+  <script src="js/jquery.blockUI.js"></script>
+  <script src="js/validetta.min.js"></script>
+  <script src="js/tlite.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

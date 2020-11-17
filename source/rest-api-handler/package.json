@@ -1,0 +1,33 @@
+{
+  "name": "preferencecenter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm install",
+    "test": "mocha *.spec.js",
+    "build:init": "rm -rf package-lock.json && rm -rf dist && rm -rf node_modules",
+    "build:zip": "rm -rf package-lock.json && zip -rq --exclude=*tests* --exclude=*template.yml rest-api-handler.zip .",
+    "build:dist": "mkdir dist && mv rest-api-handler.zip dist/",
+    "build": "npm run build:init && npm install --production && npm run build:zip && npm run build:dist",
+    "coverage": "nyc npm test",
+    "local:test": "sam local invoke 'ExampleService' -e ./tests/event.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "loglevel": "^1.7.0",
+    "moment": "^2.27.0",
+    "node-input-validator": "^4.2.1",
+    "uuid": "^8.2.0",
+    "xss": "^1.0.7"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "sinon": "*",
+    "sinon-chai": "*",
+    "mocha": "*",
+    "npm-run-all": "*"
+  }
+}

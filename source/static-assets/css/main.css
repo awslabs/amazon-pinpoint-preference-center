@@ -1,0 +1,200 @@
+/* Milligram CSS Overrides */
+.button,
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  background-color: ${PRIMARY_COLOR};
+  border: 0.1rem solid ${PRIMARY_COLOR};;
+}
+
+input[type='color']:focus,
+input[type='date']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='email']:focus,
+input[type='month']:focus,
+input[type='number']:focus,
+input[type='password']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='text']:focus,
+input[type='url']:focus,
+input[type='week']:focus,
+input:not([type]):focus,
+textarea:focus,
+select:focus {
+  border-color: ${SECONDARY_COLOR};; 
+  outline: 0;
+}
+
+hr {
+  margin: 1.5rem 0;
+  border-top: 0.1rem solid #707070;
+}
+
+label{
+  display: inline;
+}
+
+.validetta-error > input{
+  margin-bottom: 3.5rem;
+  border-color:red;
+}
+
+.error-notification {
+  display:none;
+  padding: 0 15px;
+  border-radius:4px;
+  font-weight:bold;
+  opacity: .97;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  line-height:55px;
+}
+
+.success-notification {
+  display:none;
+  padding: 0 15px;
+  border-radius:4px;
+  font-weight:bold;
+  opacity: .97;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  line-height:55px;
+}
+
+.required{
+  color: red;
+  font-weight: bold;
+}
+
+.container{
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.logo{
+  vertical-align: bottom;
+  height: 6rem;
+}
+
+.page-header {
+  padding-left: 1rem;
+}
+
+.grid-header {
+  font-size: 1.8rem;
+  line-height: 1.5;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+
+.grid-cell {
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+
+.publication-name{
+  font-weight: bold;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#progress{
+  display: none;
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 1rem;
+}
+
+.radio-label,
+.checkbox-label{
+  margin-right: 3em;
+  margin-left: 0.3em;
+}
+
+input.user-attribute-input,
+input.user-endpoint-input,
+select.user-attribute-input{
+  width: 90%;
+}
+span.checkbox-container,
+span.radio-container{
+  width: 90%;
+  display: inline-block;
+}
+
+.tooltip{
+  margin-left: 0.5rem;
+}
+
+.mobile-channel-label{
+  display:none;
+}
+
+.mobile-publication-hr{
+  display: none;
+  margin: 1.0rem 0;
+  border-top: 0.1rem solid #a7a6a6;
+}
+
+/* Correcting subscription checkboxes so they look better on mobile */
+@media (max-width: 40.0rem) {
+
+  .grid-header{
+    display:none;
+  }
+  .mobile-channel-label{
+    display:inline-block;
+  }
+
+  .mobile-publication-hr{
+    display:block;
+  }
+
+  .publication-name{
+    font-weight: bold;
+  }
+
+  .grid-cell {
+    text-align: left;
+    width: 100%;
+    display: block;
+  }
+
+  .publication-description{
+    margin-bottom: .5rem;
+  }
+
+  .mobile-channel-label{
+    margin-left: .5rem;
+  }
+
+  .row .column.column-33 {
+    max-width: calc(100% + 2.0rem);
+  }
+
+  .row .column.column-66 {
+    max-width: calc(100% + 2.0rem);
+  }
+}

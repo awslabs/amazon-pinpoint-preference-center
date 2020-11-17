@@ -1,0 +1,35 @@
+{
+  "name": "solution-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm install",
+    "test": "mocha *.spec.js",
+    "build:init": "rm -rf package-lock.json && rm -rf dist && rm -rf node_modules",
+    "build:zip": "rm -rf package-lock.json && zip -rq --exclude=*tests* --exclude=*template.yml solution-helper.zip .",
+    "build:dist": "mkdir dist && mv solution-helper.zip dist/",
+    "build": "npm run build:init && npm install --production && npm run build:zip && npm run build:dist",
+    "coverage": "nyc npm test",
+    "local:test": "sam local invoke 'ExampleService' -e ./tests/event.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "mime-types": "^2.1.27",
+    "replace-in-file": "^6.1.0",
+    "uuid": "^8.3.0",
+    "jszip": "^3.5.0",
+    "shortid": "^2.2.15"
+  },
+  "devDependencies": {
+    "aws-sdk": "*",
+    "chai": "*",
+    "sinon": "*",
+    "sinon-chai": "*",
+    "mocha": "*",
+    "aws-sdk-mock": "*",
+    "npm-run-all": "*"
+  }
+}

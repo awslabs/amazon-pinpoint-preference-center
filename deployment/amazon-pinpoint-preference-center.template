@@ -161,6 +161,11 @@ Resources:
   # Solution Helpers
   SolutionHelper:
     Type: AWS::Lambda::Function
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W89
+            reason: This is a solution helper function that doesn't need access to VPC Resources
     Properties:
       Layers: 
         - !Ref "S3DeploymentLayer"
@@ -173,6 +178,7 @@ Resources:
       Timeout: 600
       Role:
         Fn::GetAtt: [ SolutionHelperIAMRole , "Arn" ]
+      ReservedConcurrentExecutions: 5
 
   GetAPIKey:
     Type: Custom::LoadLambda
@@ -204,7 +210,9 @@ Resources:
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain
-    Properties: 
+    Properties:       
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
       AttributeDefinitions:
       - 
         AttributeName: preferenceCenterID
@@ -555,6 +563,13 @@ Resources:
 
   AccessLogGroup:
     Type: AWS::Logs::LogGroup
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W84
+            reason: LogGroups are encrypted by default. No requirements for CMK in this solution.
+    Properties:
+      RetentionInDays: 90
 
   CloudWatchLogGroupRole:
     Type: AWS::IAM::Role
@@ -651,6 +666,11 @@ Resources:
   ################
   DynamoDBStreamHandler:
     Type: "AWS::Lambda::Function"
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W89
+            reason: This is an S3 Trigger function that doesn't need access to VPC Resources
     Properties:
       Code:
         S3Bucket: !Join ["-", [!FindInMap ["SourceCode", "General", "S3Bucket"], Ref: "AWS::Region"]]
@@ -665,6 +685,7 @@ Resources:
         Variables:
           METADATA_TABLE: !Ref DynamoDBTable
           REGION: !Ref "AWS::Region"
+      ReservedConcurrentExecutions: 5
 
   StreamLambdaRole:
     Type: AWS::IAM::Role
@@ -735,6 +756,11 @@ Resources:
 
   APIHandler:
     Type: "AWS::Lambda::Function"
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W89
+            reason: This is an API Gateway Handler function that doesn't need access to VPC Resources
     Properties:
       Code:
         S3Bucket: !Join ["-", [!FindInMap ["SourceCode", "General", "S3Bucket"], Ref: "AWS::Region"]]
@@ -757,6 +783,7 @@ Resources:
           SOLUTION_VERSION: !FindInMap ["MetricsMap", "Send-Data", "Version"]
           SEND_ANONYMOUS_DATA: !FindInMap ["MetricsMap", "Send-Data", "SendAnonymousData"]
           SOLUTION_UUID: !GetAtt CreateUniqueID.solutionUUID
+      ReservedConcurrentExecutions: 10
 
   # Lambda Invoke Permissions to API Gateway
   lambdaApiGatewayInvokeMetadataGet:
@@ -847,6 +874,11 @@ Resources:
 
   lambdaLogGroup:
     Type: "AWS::Logs::LogGroup"
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W84
+            reason: LogGroups are encrypted by default. No requirements for CMK in this solution.
     Properties:
       RetentionInDays: 90
 

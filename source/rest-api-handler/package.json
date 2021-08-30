@@ -16,7 +16,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "loglevel": "^1.7.0",
     "moment": "^2.27.0",
     "node-input-validator": "^4.2.1",
